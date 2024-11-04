@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+<div class="container mb-5">
+    <div class="card mt-5">
+        <div class="card-header">Liste des Clients</div>
+        <div class="card-body">
+
+{% block body %}
+    <h1>Créer un nouveau client</h1>
+
+    {{ form_start(form) }}
+        {{ form_row(form.surname) }}
+        {{ form_row(form.telephone) }}
+        {{ form_row(form.adresse) }}
+        
+        {# Case à cocher pour créer un utilisateur #}
+        {{ form_row(form.createUser) }}
+
+        {# Formulaire de création d'utilisateur, masqué par défaut #}
+        <div id="new-user-form" style="display: none; ">
+            {{ form_row(form.newUser.login) }}
+            {{ form_row(form.newUser.password) }}
+        </div>
+
+        <button class="btn btn-outline-primary col-1">Enregistrer</button>
+         {{ form_end(form) }}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const createUserCheckbox = document.getElementById('{{ form.createUser.vars.id }}');
+            const newUserForm = document.getElementById('new-user-form');
+
+            // Fonction pour afficher/masquer le formulaire utilisateur
+            function toggleUserForm() {
+                newUserForm.style.display = createUserCheckbox.checked ? 'block' : 'none';
+            }
+
+            // Appliquer la fonction lors du changement de la case à cocher
+            createUserCheckbox.addEventListener('change', toggleUserForm);
+
+            // Initialiser le formulaire en fonction de l'état de la case
+            toggleUserForm();
+        });
+    </script>
+{% endblock %}  
+    </div>
+</div>
+
+{% endblock %}
