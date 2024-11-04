@@ -2,7 +2,9 @@
 
 namespace App\Repository;
 
+use App\Entity\Client;
 use App\Entity\Dette;
+use DateTimeImmutable;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -45,11 +47,41 @@ class DetteRepository extends ServiceEntityRepository
 {
     $queryBuilder = $this->createQueryBuilder('d');
 
-    if ($statut !== null) { // Vérifiez que le statut n'est pas null avant de l'utiliser dans la condition
+    if ($statut !== null) {
         $queryBuilder->andWhere('d.statut = :statut')
                      ->setParameter('statut', $statut);
     }
 
     return $queryBuilder->getQuery()->getResult();
 }
+
+
+
+
+public function filterDette(?string $statut, ?Client $client, ?DateTimeImmutable $date): array
+{
+    $qb = $this->createQueryBuilder('d');
+
+    // Filtre par statut
+    if ($statut !== null) {
+        $qb->andWhere('d.statut = :statut')
+           ->setParameter('statut', $statut);
+    }
+
+    // Filtre par client
+    if ($client !== null) {
+        $qb->andWhere('d.client = :client')
+           ->setParameter('client', $client);
+    }
+
+    // Filtre par date
+    if ($date !== null) {
+        $qb->andWhere('d.date = :date')
+           ->setParameter('date', $date);
+    }
+
+    return $qb->getQuery()->getResult();
+}
+
+
 }

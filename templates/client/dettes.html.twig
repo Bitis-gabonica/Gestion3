@@ -3,7 +3,7 @@
 {% block main %}
 <div class="container mb-5">
     <div class="card mt-5">
-        <div class="card-header">Liste des dettes de {{client.surname}}</div>
+        <div class="card-header">Liste des dettes de {{client.surname}} / Numero de telephone: {{client.telephone}}</div>
         <div class="card-body">
                  {{ form_start(form) }}
 <div style="display: flex; align-items: center;">
@@ -22,9 +22,10 @@
         });
     });
 </script>
+
             <!-- Table des dettes -->
             <div class="table-responsive">
-                <table class="table table-light table-bordered table-striped">
+                <table class="table table-lwhite table-bordered table-hover">
                     <thead>
                         <tr>
                             <th scope="col">Total dus</th>
@@ -37,19 +38,24 @@
                     <tbody>
                 {% for dette in dettes %}
                             <tr>
-                            <td>{{dette.montant-dette.montantVerse}}</td>
-                            <td>{{dette.montant}}</td>
-                            <td>{{dette.montantVerse}}</td>
+                            <td>{{dette.montant-dette.montantVerse}} XOF</td>
+                            <td>{{dette.montant}} XOF</td>
+                            <td>{{dette.montantVerse}} XOF</td>
                             <td>{{dette.date.format('Y-m-d')}}</td>
-                            <td>
-                                <a class="btn btn-primary py-1" href="#" role="button">
-                                    modifier
+                          <td>
+                                <a class="btn btn-outline-primary" href="#" role="button">
+                                    Modifier
                                 </a>
+                               <a href="#" class="btn btn-outline-danger" role="button" >
+                                           supprimer
+                                        </a>
                             </td>
+
+
                         </tr>
                         {% else %}
                            Aucune dette
-                        {% endfor %}
+                       {% endfor %}
                        
                     </tbody>
                 </table>
@@ -57,7 +63,7 @@
             
             <!-- Bouton pour ajouter un client -->
             <div class="row my-2 d-flex justify-content-end">
-                <a href="{{path('client.create')}}" class="btn btn-outline-primary col-1">Créer</a>
+                <a href="{{path('dette.create',{id:client.id})}}" class="btn btn-primary col-1">Créer</a>
             </div>
             
         </div>

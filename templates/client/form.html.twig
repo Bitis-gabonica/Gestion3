@@ -3,7 +3,7 @@
 {% block main %}
 <div class="container mb-5">
     <div class="card mt-5">
-        <div class="card-header">Liste des Clients</div>
+        <div class="card-header">Creer Clients</div>
         <div class="card-body">
 
 {% block body %}
@@ -21,6 +21,7 @@
         <div id="new-user-form" style="display: none; ">
             {{ form_row(form.newUser.login) }}
             {{ form_row(form.newUser.password) }}
+            {{ form_row(form.newUser.roles) }}
         </div>
 
         <button class="btn btn-outline-primary col-1">Enregistrer</button>

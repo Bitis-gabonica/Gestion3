@@ -3,51 +3,50 @@
 {% block main %}
 <div class="container mb-5">
     <div class="card mt-5">
-        <div class="card-header">Liste des Clients</div>
-        <div class="card-body">
-            <!-- Filtrage par Surname et Numero -->
-                             {{ form_start(form, {'attr': {'class': 'row g-1 align-items-center'}}) }}
-    <div class="col-auto">
-        {{ form_row(form.numero, {'label': false, 'attr': {'class': 'form-control form-control-sm', 'placeholder': 'Numéro de téléphone'}}) }}
-    </div>
-    <div class="col-auto">
-        {{ form_row(form.surname, {'label': false, 'attr': {'class': 'form-control form-control-sm', 'placeholder': 'Surname'}}) }}
-    </div>
-    <div class="col-auto">
-        {{ form_row(form.createUser, {'label': false, 'attr': {'class': 'form-select form-select-sm'}}) }}
-    </div>
-    <div class="col-auto">
-        {{ form_row(form.recherche) }}
-    </div>
-{{ form_end(form) }}
+        <div class="card-header"></div>
+        <div class="card-body"
+                 {# dette_filter.html.twig #}
+                        <form method="POST" action="{{ path('dette.index') }}" class="form-inline">
+            {{ form_widget(form.statut, {'attr': {'class': 'form-control'}}) }}
+            {{ form_widget(form.date, {'attr': {'class': 'form-control'}}) }}
+            {{ form_widget(form.client, {'attr': {'class': 'form-control'}}) }}
+            {{ form_widget(form.filtrer, {'attr': {'class': 'btn btn-dark'}}) }}
+            <input type="hidden" name="_token" value="{{ csrf_token('dette_filter') }}">
+        </form>
 
-            
-            <!-- Table des clients -->
+            <!-- Table des dettes -->
             <div class="table-responsive">
-                <table class="table table-white table-bordered table-hover ">
+                <table class="table table-lwhite table-bordered table-hover">
                     <thead>
                         <tr>
-                            <th scope="col">Surname</th>
-                            <th scope="col">Adresse</th>
-                            <th scope="col">Telephone</th>
+                            <th scope="col">Total dus</th>
+                            <th scope="col">Montant</th>
+                            <th scope="col">Montant verse</th>
+                            <th scope="col">Date</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                {% for client in dataClient %}
+                {% for dette in dettes %}
                             <tr>
-                            <td>{{client.surname}}</td>
-                            <td>{{client.adresse}}</td>
-                            <td>{{client.Telephone}}</td>
-                            <td>
-                                <a class="btn btn-outline-primary py-1" href="{{ path('client.dettes', { id: client.id }) }}" role="button">
-                                    Dettes
+                            <td>{{dette.montant-dette.montantVerse}} XOF</td>
+                            <td>{{dette.montant}} XOF</td>
+                            <td>{{dette.montantVerse}} XOF</td>
+                            <td>{{dette.date.format('Y-m-d')}}</td>
+                          <td>
+                                <a class="btn btn-outline-primary" href="#" role="button">
+                                    Modifier
                                 </a>
+                               <a href="#" >
+                                           supprimer
+                                        </a>
                             </td>
+
+
                         </tr>
                         {% else %}
-                           Aucun client
-                        {% endfor %}
+                           Aucune dette
+                       {% endfor %}
                        
                     </tbody>
                 </table>
@@ -55,7 +54,7 @@
             
             <!-- Bouton pour ajouter un client -->
             <div class="row my-2 d-flex justify-content-end">
-                <a href="{{path('client.create')}}" class="btn btn-outline-primary col-1">Créer</a>
+                <a href="#" class="btn btn-primary col-1">Créer</a>
             </div>
             
         </div>

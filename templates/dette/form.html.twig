@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+<div class="container mb-5">
+    <div class="card mt-5">
+        <div class="card-header">Creer Dettes</div>
+        <div class="card-body">
+
+{% block body %}
+    <h1>Créer une dette a {{client.surname}}</h1>
+    {{form(form)}}
+{% endblock %}  
+    </div>
+</div>
+
+{% endblock %}

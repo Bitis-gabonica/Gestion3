@@ -44,6 +44,7 @@ class Client
     #[ORM\OneToOne(inversedBy: 'client', cascade: ['persist', 'remove'])]
     private ?User $utilisateur = null;
 
+
     public function __construct()
     {
         $this->dettes = new ArrayCollection();
